@@ -5,7 +5,11 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 function EventCard({ event, isFavorite, onPress, onFavoritePress }) {
   return (
     <View style={styles.card}>
-      <TouchableOpacity onPress={onPress} style={styles.cardContent}>
+      <TouchableOpacity 
+        onPress={onPress} 
+        style={styles.cardContent}
+        activeOpacity={0.8}
+      >
         <Text style={styles.title}>{event.title}</Text>
         <Text style={styles.details}>{event.date} • {event.time}</Text>
         <Text style={styles.location}>📍 {event.location}</Text>
@@ -13,9 +17,10 @@ function EventCard({ event, isFavorite, onPress, onFavoritePress }) {
       <TouchableOpacity 
         onPress={(e) => {
           e.stopPropagation();
-          onFavoritePress();
+          onFavoritePress && onFavoritePress();
         }}
         style={styles.favoriteIcon}
+        activeOpacity={0.6}
       >
         <Icon 
           name={isFavorite ? 'favorite' : 'favorite-border'} 

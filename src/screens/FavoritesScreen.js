@@ -6,12 +6,15 @@ import EventCard from '../components/EventCard';
 function FavoritesScreen({ navigation }) {
   const { events, favorites, toggleFavorite } = useEvents();
   
-  const favoriteEvents = events.filter(event => favorites.includes(event.id));
+  const favoriteEvents = events.filter(event => 
+    favorites.includes(event.id)
+  );
 
   return (
     <View style={styles.container}>
       <FlatList
         data={favoriteEvents}
+        extraData={favorites} // Important for re-renders
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <EventCard
@@ -21,13 +24,6 @@ function FavoritesScreen({ navigation }) {
             onFavoritePress={() => toggleFavorite(item.id)}
           />
         )}
-        contentContainerStyle={styles.listContent}
-        ListEmptyComponent={
-          <View style={styles.emptyContainer}>
-            <Text style={styles.emptyText}>No favorite events yet</Text>
-            <Text style={styles.emptySubtext}>Tap the ♡ icon on events to add them</Text>
-          </View>
-        }
       />
     </View>
   );

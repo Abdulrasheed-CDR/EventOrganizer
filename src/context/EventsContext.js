@@ -93,11 +93,24 @@ export function EventsProvider({ children }) {
   };
 
   const toggleFavorite = async (eventId) => {
-    const favoriteRef = doc(db, 'users', user.uid, 'favorites', eventId);
-    if (favorites.includes(eventId)) {
-      await deleteDoc(favoriteRef);
-    } else {
-      await setDoc(favoriteRef, { eventId });
+    try {
+      const favoriteRef = doc(db, 'users', user.uid, 'favorites', eventId);
+      
+      if (favorites.includes(eventId)) {
+        // Remove from favorites
+        await deleteDoc(favoriteRef);
+        setFavorites(prev => prev.filter(id => id !== eventId));
+      } else {
+        // Add to favorites
+        await setDoc(favoriteRef, { 
+          eventId,
+          createdAt: new Date().toISOString() 
+        });
+        setFavorites(prev => [...prev, eventId]);
+      }
+    } catch (error) {
+      console.error("Error toggling favorite:", error);
+      Alert.alert("Error", "Could not update favorites");
     }
   };
 

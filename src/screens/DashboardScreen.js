@@ -7,7 +7,7 @@ import { auth, signOut } from '../utils/firebase';
 
 function DashboardScreen({ navigation }) {
   const { user } = useAuth();
-  const { events, favorites, loading } = useEvents();
+  const { events, favorites, loading, toggleFavorite } = useEvents();
 
   const handleLogout = async () => {
     try {

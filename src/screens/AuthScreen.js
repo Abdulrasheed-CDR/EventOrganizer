@@ -19,12 +19,12 @@ function AuthScreen({ navigation }) {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        navigation.dispatch(
-          CommonActions.reset({
-            index: 0,
-            routes: [{ name: 'Dashboard' }],
-          })
-        );
+        // navigation.dispatch(
+        //   CommonActions.reset({
+        //     index: 0,
+        //     routes: [{ name: 'Dashboard' }],
+        //   })
+        // );
       }
     });
     return unsubscribe;
