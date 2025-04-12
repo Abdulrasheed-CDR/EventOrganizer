@@ -1,3 +1,4 @@
+import { setDoc } from 'firebase/firestore';
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { db, collection, onSnapshot, doc, addDoc, updateDoc, deleteDoc } from '../utils/firebase';
 import { useAuth } from './AuthContext';
@@ -99,20 +100,21 @@ export function EventsProvider({ children }) {
       if (favorites.includes(eventId)) {
         // Remove from favorites
         await deleteDoc(favoriteRef);
-        setFavorites(prev => prev.filter(id => id !== eventId));
+        // No need to manually setFavorites since onSnapshot will update it
       } else {
         // Add to favorites
         await setDoc(favoriteRef, { 
           eventId,
           createdAt: new Date().toISOString() 
         });
-        setFavorites(prev => [...prev, eventId]);
+        // No need to manually setFavorites since onSnapshot will update it
       }
     } catch (error) {
       console.error("Error toggling favorite:", error);
       Alert.alert("Error", "Could not update favorites");
     }
   };
+  
 
   const value = {
     events,

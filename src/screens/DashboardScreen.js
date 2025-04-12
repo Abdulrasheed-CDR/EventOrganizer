@@ -56,6 +56,7 @@ function DashboardScreen({ navigation }) {
             event={item}
             isFavorite={favorites.includes(item.id)}
             onPress={() => navigation.navigate('EventDetail', { eventId: item.id })}
+            onFavoritePress={() => toggleFavorite(item.id)} 
           />
         )}
         contentContainerStyle={{ padding: 16 }}
